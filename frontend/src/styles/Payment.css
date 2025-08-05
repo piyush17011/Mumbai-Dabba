@@ -1,0 +1,113 @@
+
+/* Payment.css */
+.payment-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-container h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .payment-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .payment-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .payment-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .payment-form input,
+  .payment-form select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .payment-form input[type="number"] {
+    width: 150px;
+  }
+  
+  .payment-form button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #3399cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .payment-form button:hover {
+    background-color: #2874b0;
+  }
+  
+  .payment-form .cancel-button {
+    background-color: #e0e0e0;
+    margin-top: 10px;
+  }
+  
+  .payment-form .cancel-button:hover {
+    background-color: #d4d4d4;
+  }
+  
+  .payment-form .toggle-map-button {
+    padding: 8px 12px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .payment-form .toggle-map-button:hover {
+    background-color: #ffbb00;
+  }
+  
+  .map-container {
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  
+  .payment-form p {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: green;
+  }
+  
+  .payment-form .order-button {
+    background-color: #28a745;
+  }
+  
+  .payment-form .order-button:hover {
+    background-color: #218838;
+  }
+  

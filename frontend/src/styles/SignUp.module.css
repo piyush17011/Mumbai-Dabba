@@ -1,0 +1,169 @@
+.l2 {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb, #90caf9);
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.registrationContainer {
+  display: flex;
+  height: 750px;
+  width: 650px;
+  margin: 15px auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.logoSection {
+  background: linear-gradient(to bottom, #2c3e50, #34495e);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+}
+
+.logoSection img {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.logoSection h1 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.registrationForm {
+  display: flex;
+  flex-direction: column;
+  padding-left: 42px;
+  padding-top: 1px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:hover,
+select:hover {
+  border-color: #1e88e5;
+}
+
+input:focus,
+select:focus {
+  border-color: #42a5f5;
+  outline: none;
+  box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+}
+
+/* Style for the Dropdown */
+select {
+  appearance: none; /* Removes default OS styling */
+  background-color: white;
+  cursor: pointer;
+}
+
+select::-ms-expand {
+  display: none; /* Removes default dropdown arrow in IE */
+}
+
+/* Dropdown Arrow */
+select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="black"><path d="M5 7l5 5 5-5H5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+}
+
+/* Error & Success Messages */
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.successMessage {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Register Button */
+.registerButton {
+  padding: 12px;
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.registerButton:hover {
+  background-color: #1e88e5;
+  transform: scale(1.05);
+}
+
+/* Navigation Links */
+.navigationText {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.loginLink {
+  color: #42a5f5;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.loginLink:hover {
+  color: #1e88e5;
+}

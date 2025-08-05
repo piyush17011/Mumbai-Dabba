@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
+
+/* General Styles */
+.container1 {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  /* background-color: rgb(169, 245, 240); */
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh; /* Ensure the container grows with content */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items horizontally */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  padding-top: 60px; /* Add padding equal to the header height */
+  position: relative;
+}
+
+/* Prevent horizontal scrolling across the entire page */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+/* Logo Styling */
+.logo {
+  height: 50px; /* Adjust the height as needed */
+  cursor: pointer; /* Add a pointer cursor for clickable logos */
+  margin-right: auto; /* Push the logo to the left */
+}
+
+/* Header Flex Alignment */
+.header1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between logo and buttons */
+  padding: 0 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px; /* Add space between the buttons */
+}
+
+/* Header Section */
+.header1 {
+  height: 60px; /* Set a fixed height for the header */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #f8f9fa;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: -25px;
+  z-index: 100; /* Keep the header on top */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
+.button1 {
+  background-color: #cc0000;
+  color: #ffffff;
+  border: none;
+  font-size: 15px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px; /* Add space between buttons */
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.button1:hover {
+  background-color: #990000;
+  box-shadow: 0 6px 12px rgba(204, 0, 0, 0.5);
+}
+
+.gifContainer1 {
+  flex: 1; /* Allow the GIF to take up remaining vertical space */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevent content from overflowing */
+}
+
+.gif1 {
+  max-width: 100%; /* Ensure the GIF fits within the screen width */
+  height: auto; /* Maintain the aspect ratio */
+  object-fit: contain; /* Prevent cropping */
+}
+
+/* Text Section 2 */
+
+.textContainer2 {
+  margin-top: 20px; /* Space between the GIF and text */
+  text-align: center;
+  
+  width: 100%; /* Ensure the text spans across the page */
+}
+
+.dabbawalaText1 {
+  font-family: "Birthstone", serif;
+  font-weight: 400;
+  font-style: bold;
+  font-size: 40px; /* Adjust font size */
+  color: #ff0000; /* Set a distinctive color */
+  margin-top: 10px; /* Add spacing above */
+  text-align: center; /* Center align text */
+  
+}
+
+.dabbawalaText2 {
+  
+  font-style: bold;
+  font-size: 40px; /* Adjust font size */
+  color: #000000; /* Set a distinctive color */
+  text-align: center; /* Center align text */
+  
+}
+
+
+/* Text Section 2 */
+.textContainer1 {
+  margin-top: 20px; /* Space between the GIF and text */
+  text-align: center;
+  
+  width: 100%; /* Ensure the text spans across the page */
+}
+
+.mainText1 {
+  font-size: 45px;
+  font-weight: bold;
+  color: #cc0000;
+  margin-bottom: 10px;
+}
+
+.subText1 {
+  font-size: 30px;
+  color: #000080;
+  font-style: italic;
+}
+
+/* General Styles */
+
+/* Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation Classes */
+.slideInLeft {
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+.slideInRight {
+  animation: slideInRight 1s ease-out forwards;
+}
+
+/* Info Section */
+.infoSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 1200px;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(20px); /* Offset for smooth appearance */
+  transition: opacity 0.5s, transform 0.5s; /* Smooth visibility change */
+}
+
+.animateSection {
+  opacity: 1; /* Become visible */
+  transform: translateY(0); /* Reset position */
+}
+
+.infoText {
+  flex: 1; /* Take up equal space */
+  font-family: 'Arial', sans-serif;
+  font-size: 18px; /* Match the font size */
+  color: #000000; /* Text color */
+  line-height: 1.8; /* Add spacing between lines for readability */
+  text-align: justify; /* Justify the text for cleaner alignment */
+  padding-right: 20px; /* Add space between text and image */
+}
+
+.infoText p {
+  margin-bottom: 20px; /* Add spacing between paragraphs */
+}
+
+
+.infoImage {
+  flex: 1; /* Take up equal space */
+  display: flex;
+  justify-content: center; /* Center align the image */
+  align-items: center;
+}
+
+.image1 {
+  max-width: 100%; /* Ensure the image doesn't overflow */
+  height: auto; /* Maintain the aspect ratio */
+  border-radius: 10px; /* Add rounded corners */
+  
+}
+
+/* Swapped Layout Section Adjustments */
+.infoSection {
+  display: flex;
+  flex-direction: row; /* Keep the image on the left and text on the right */
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 1200px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.animateSection {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.infoText {
+  flex: 1;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  color: #000000;
+  line-height: 1.8;
+  text-align: justify;
+  padding-left: 20px; /* Adjust padding on the left */
+  margin-left: 40px; /* Increase margin to create space between image and text */
+}
+
+.infoImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px; /* Increase margin on the right to create more space */
+}
+
+.image2 {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+
+/* Call-to-Action Section */
+.ctaSection {
+  background-color: 
+  #cc0000; /* Dabbawala red */
+  color: #ffffff; /* White text */
+  text-align: center; /* Center align the content */
+  padding: 40px 20px; /* Add spacing around the content */
+  margin-top: 20px; /* Space above the section */
+  height:auto; /* Ensure the height adapts to the content */
+  width: 100%; /* Make sure it spans the full width */
+}
+
+/* Handle landscape orientation */
+@media (orientation: landscape) {
+  .ctaSection {
+    height: 20vh; /* Ensure the background color covers full viewport height in landscape */
+    width: 100vw; /* Ensure full width coverage */
+  }
+}
+
+.ctaHeading {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ctaSubText {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background-color: #ffffff; /* White button */
+  color: #cc0000; /* Red text */
+  border: none;
+  font-size: 16px;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.ctaButton:hover {
+  background-color: #f8f9fa; /* Slightly lighter background */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow */
+  transform: scale(1.05); /* Slightly increase size */
+}
+
+/*Footer section*/
+.footerSection{
+
+  background-color: aqua;
+}
+.footerText{
+  text-align: center;
+  font-style: bold;
+  
+}@media (orientation: landscape) {
+  .footerSection{
+    height: 6vh; /* Ensure the background color covers full viewport height in landscape */
+    width: 100vw; /* Ensure full width coverage */
+  }
+}

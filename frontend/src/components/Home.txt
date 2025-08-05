@@ -1,0 +1,312 @@
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/Home.css";
+import axios from "axios";
+import Navbar from "./Navbar";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+const Home = () => {
+  const navigate = useNavigate();
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
+
+  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [billingCycle, setBillingCycle] = useState("Daily");
+  const [formData, setFormData] = useState({
+    address: "",
+    quantity: 1,
+  });
+
+  const [showMap, setShowMap] = useState(false);
+
+  const meals = [
+    {
+      id: 1,
+      name: "Maharashtrian Thali",
+      description:
+        "A flavorful Maharashtrian Thali with rice, curry, veggies, roti, and yogurt.",
+      price: 150,
+      image: "../images/meal1.webp",
+    },
+    {
+      id: 2,
+      name: "North Indian Thali",
+      description:
+        "A vibrant North Indian Thali with rice, dal, curries, vegetables, sweets, and yogurt for a delightful meal.",
+      price: 200,
+      image: "../images/meal4.webp",
+    },
+    {
+      id: 3,
+      name: "South Indian Thali",
+      description:
+        "A traditional South Indian banana leaf meal with rice, sambar, rasam, curries, fritters, papad, and dessert.",
+      price: 250,
+      image: "../images/meal2.webp",
+    },
+  ];
+
+ useEffect(() => {
+     if (selectedMeal && showMap) {
+       initMap();
+     }
+   }, [selectedMeal, showMap]);
+
+  const initMap = () => {
+    if (mapRef.current && !mapRef.current._leaflet_id) {
+      const mumbaiCoordinates = [19.0760, 72.8777];
+      const map = L.map(mapRef.current).setView(mumbaiCoordinates, 12);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const customIcon = L.icon({
+        iconUrl: '/marker.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      });
+
+      const marker = L.marker(mumbaiCoordinates, { icon: customIcon, draggable: true }).addTo(map);
+      markerRef.current = marker;
+
+      map.on('click', (e) => {
+        const { lat, lng } = e.latlng;
+        marker.setLatLng([lat, lng]);
+        fetchAddress(lat, lng);
+      });
+
+      mapRef.current.style.cursor = "pointer";
+    }
+  };
+
+  const fetchAddress = async (lat, lng) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+      );
+      const address = response.data.display_name;
+      setFormData((prev) => ({ ...prev, address }));
+    } catch (error) {
+      console.error("Failed to fetch address:", error);
+      alert("Failed to fetch address. Please try again.");
+    }
+  };
+
+  const calculateTotalPrice = () => {
+    const multiplier = billingCycle === "Daily" ? 1 : billingCycle === "Monthly" ? 30 : 365;
+    return selectedMeal.price * formData.quantity * multiplier;
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!formData.address) {
+      alert("Please select a delivery address.");
+      return;
+    }
+
+    const userDetail = localStorage.getItem("user");
+    const user = JSON.parse(userDetail);
+
+    const orderData = {
+      userId: user.data._id,
+      orderItems: [
+        {
+          meal: selectedMeal.name,
+          deliveryAddress: formData.address,
+          subscriptionType: billingCycle,
+          quantity: formData.quantity,
+        },
+      ],
+      amount: calculateTotalPrice(),
+    };
+
+    try {
+      console.log("Order Data:", orderData);
+      const response = await axios.post('http://localhost:5000/api/orders/addorder', orderData);
+      console.log(response.data);
+      // alert(`Order placed successfully! Total Price: ₹${orderData.amount}`);
+      navigate('/orders');
+    } catch (error) {
+      console.error("Order Placement Error:", error);
+      alert(error.response?.data?.message || "Failed to place the order.");
+    }
+  };
+
+  const handlePayment = async () => {
+    if (!formData.address) {
+      alert("Please select a delivery address.");
+      return;
+    }
+  
+    try {
+      const amount = calculateTotalPrice();
+  
+      // Retrieve user details
+      const userDetail = localStorage.getItem("user");
+      const user = JSON.parse(userDetail);
+  
+      // Step 1: Create Razorpay order
+      const { data: order } = await axios.post('http://localhost:5000/api/payments/create-order', {
+        amount,
+        currency: 'INR',
+      });
+  
+      // Step 2: Razorpay Checkout Integration
+      const options = {
+        key: 'rzp_test_lOWyUeXOi1ZOkj', // Replace with your Razorpay key
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Mumbai Dabbewala',
+        description: 'Meal Subscription Payment',
+        order_id: order.id,
+        handler: async (response) => {
+          console.log('Razorpay Response:', response);
+          
+          // Post the payment verification to your backend
+          try {
+            await axios.post('http://localhost:5000/api/payments/verify', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+  
+            // If payment verification is successful, place the order and navigate
+            alert('Payment Successful! 🎉');
+            await handlePlaceOrder(); // Place order after successful payment
+            navigate("/success"); // Navigate to success page
+          } catch (error) {
+            console.error('Payment Verification Error:', error);
+            alert('Failed to verify payment. Please try again.');
+          }
+        },
+        prefill: {
+          name: user?.data?.username || "Guest User",
+          email: user?.data?.email || "guest@example.com",
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error('Payment Error:', error);
+      alert('Failed to initiate payment. Please try again.');
+    }
+  };
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleBillingChange = (e) => {
+    setBillingCycle(e.target.value);
+  };
+
+  const handleCancel = () => {
+    setSelectedMeal(null);
+    setFormData({ address: "", quantity: 1 });
+    setBillingCycle("Daily");
+    setShowMap(false);
+  };
+
+  return (
+    <>
+      <Navbar />
+      <div className="Home">
+        <div className="hero-section">
+          <h2>Choose Your Meal</h2>
+          <div className="card-container">
+            {meals.map((meal) => (
+              <div key={meal.id} className="card">
+                <h3>{meal.name}</h3>
+                <img style={{ height: "410px" }} className="card-img" src={meal.image} alt={meal.name} />
+                <p>{meal.description}</p>
+                <button onClick={() => setSelectedMeal(meal)}>View Details</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {selectedMeal && (
+          <div className="details-section">
+            <h2>Order Details for {selectedMeal.name}</h2>
+            <img className="details-img" src={selectedMeal.image} alt={selectedMeal.name} />
+            <form className="order-form">
+            <div className="form-group">
+                  <label htmlFor="address">Delivery Address</label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    placeholder="Click on map to select address"
+                    required
+                  />
+                </div>
+                <button
+                  className="toggle-map-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowMap((prev) => !prev);
+                  }}
+                >
+                  {showMap ? "Hide Map" : "Show Map"}
+                </button>
+                {showMap && (
+                  <div
+                    className="map-container"
+                    ref={mapRef}
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      margin: "10px 0",
+                      cursor: "pointer",
+                    }}
+                  ></div>
+                )}
+              <div className="form-group">
+                <label htmlFor="quantity">Quantity</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  value={formData.quantity}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="billingCycle">Billing Cycle</label>
+                <select
+                  id="billingCycle"
+                  name="billingCycle"
+                  value={billingCycle}
+                  onChange={handleBillingChange}
+                  required
+                >
+                  <option value="Daily">Daily</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Yearly">Yearly</option>
+                </select>
+              </div>
+              <p>Total Price: ₹<span style={{ color: "green" }}>{calculateTotalPrice()}</span></p>
+              <button type="button" className="order-button" onClick={handlePayment}>
+                Proceed to Payment
+              </button>
+              <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Home;

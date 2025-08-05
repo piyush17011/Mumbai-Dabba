@@ -1,0 +1,127 @@
+/* General Styling */
+.users-heading {
+  text-align: center;
+  font-size: 2rem;
+  color: #5a4f3c;
+  margin: 20px 0;
+  font-family: 'Georgia', serif;
+}
+
+/* Container for User Cards */
+.users-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* User Card Styling */
+.user-card {
+  background: #fdfaf4;
+  border: 1px solid #e2dcd5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+.user-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #4e3b30;
+}
+
+.user-card p {
+  font-size: 0.95rem;
+  color: #5f4c42;
+  margin: 5px 0;
+}
+
+/* Button Styling */
+.view-orders-btn {
+  margin-top: 15px;
+  background-color: #c8a97e;
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.view-orders-btn:hover {
+  background-color: #a0805c;
+  transform: scale(1.05);
+}
+
+/* User Orders Section */
+.user-orders {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f9f3e7;
+  border-top: 1px solid #e2dcd5;
+  border-radius: 5px;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-orders h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #5a4f3c;
+  text-align: center;
+}
+
+.order-card {
+  padding: 8px;
+  margin-bottom: 8px;
+  background: #fff;
+  border: 1px solid #e2dcd5;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.order-card p {
+  margin: 3px 0;
+  color: #5f4c42;
+}
+
+/* Hover Effect */
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Delete Button Styling */
+.delete-user-btn {
+  margin-top: 15px;
+  background-color: #d9534f;
+  color: white;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.delete-user-btn:hover {
+  background-color: #c9302c;
+}
+.current-user-label {
+  
+  background-color: #4caf50;
+  color: white;
+  
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
